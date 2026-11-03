@@ -5,12 +5,14 @@ require('dotenv').config();
 require('./configuracion/conexion_db');
 
 const servidor_api = marco_express();
-const puerto_asignado = process.env.PUERTO_SERVIDOR || 3001;
+
+// CRÍTICO: Se añade process.env.PORT como primera opción para que Render pueda enlazar el tráfico
+const puerto_asignado = process.env.PORT || process.env.PUERTO_SERVIDOR || 3001;
 
 servidor_api.use(modulo_cors({
     origin: '*', 
-    methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type']
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 servidor_api.use(marco_express.json());
